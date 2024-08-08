@@ -3,7 +3,7 @@ from flask import Flask, render_template, session, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -44,6 +44,7 @@ class User(db.Model):
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
+    options = SelectField('Choose one:', choices=[('option1', 'Option 1'), ('option2', 'Option 2'), ('option3', 'Option 3')])
     submit = SubmitField('Submit')
 
 
