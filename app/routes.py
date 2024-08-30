@@ -41,7 +41,7 @@ def professores():
     return render_template('professores.html', users=users)
 
 @main.route('/disciplinas')
-def ddisciplinas():
+def disciplinas():
     users = User.query.all()
     return render_template('disciplinas.html', users=users)
 
