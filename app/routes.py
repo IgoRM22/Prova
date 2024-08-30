@@ -1,5 +1,5 @@
 # app/routes.py
-from flask import render_template, session, redirect, url_for, flash
+from flask import render_template, session, redirect, url_for, flash, request
 from . import db
 from .models import User, Role
 from .forms import NameForm
@@ -44,6 +44,21 @@ def dashboard():
 def admin():
     roles = Role.query.all()
     return render_template('admin.html', roles=roles)
+
+@main.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    user = User.query.get_or_404(user_id)
+    form = NameForm(obj=user)
+    form.role.choices = [(role.id, role.name) for role in Role.query.order_by('name')]
+
+    if form.validate_on_submit():
+        user.username = form.name.data
+        user.role = Role.query.get(form.role.data)
+        db.session.commit()
+        flash(f'Usuário {user.username} atualizado com sucesso.')
+        return redirect(url_for('main.admin'))
+
+    return render_template('edit_user.html', form=form, user=user)
 
 @main.route('/delete_user/<int:user_id>', methods=['POST'])
 def delete_user(user_id):

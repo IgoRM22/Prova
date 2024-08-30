@@ -10,39 +10,27 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Nome do Usuário</th>
                 <th>Função</th>
-                <th>Usuários</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
             {% for role in roles %}
+            {% for user in role.users %}
             <tr>
+                <td>{{ user.username }}</td>
                 <td>{{ role.name }}</td>
                 <td>
-                    <ul>
-                        {% for user in role.users %}
-                        <li>{{ user.username }}</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        {% for user in role.users %}
-                        <li style="display: flex; align-items: center;">
-                            <!-- Botão Editar -->
-                            <form action="#" method="GET" style="display:inline;">
-                                <button type="button" class="btn btn-info btn-sm" style="margin-right: 5px;">Editar</button>
-                            </form>
-                            <!-- Botão Excluir -->
-                            <form action="{{ url_for('main.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">&times;</button>
-                            </form>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    <!-- Botão Editar -->
+                    <a href="{{ url_for('main.edit_user', user_id=user.id) }}" class="btn btn-info btn-sm" style="margin-right: 5px;">Editar</a>
+                    <!-- Botão Excluir -->
+                    <form action="{{ url_for('main.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">&times;</button>
+                    </form>
                 </td>
             </tr>
+            {% endfor %}
             {% endfor %}
         </tbody>
     </table>
