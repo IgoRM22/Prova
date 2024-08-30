@@ -35,38 +35,20 @@ def index():
     return render_template('index.html', form=form, name=session.get('name'),
                            known=session.get('known', False), user_all=users, roles=roles)
 
-@main.route('/dashboard')
+@main.route('/professores')
 def dashboard():
     users = User.query.all()
-    return render_template('dashboard.html', users=users)
+    return render_template('professores.html', users=users)
 
-@main.route('/admin')
+@main.route('/disciplinas')
+def dashboard():
+    users = User.query.all()
+    return render_template('disciplinas.html', users=users)
+
+@main.route('/alunos')
 def admin():
     roles = Role.query.all()
-    return render_template('admin.html', roles=roles)
-
-@main.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
-def edit_user(user_id):
-    user = User.query.get_or_404(user_id)
-    form = NameForm(obj=user)
-    form.role.choices = [(role.id, role.name) for role in Role.query.order_by('name')]
-
-    if form.validate_on_submit():
-        user.username = form.name.data
-        user.role = Role.query.get(form.role.data)
-        db.session.commit()
-        flash(f'Usuário {user.username} atualizado com sucesso.')
-        return redirect(url_for('main.admin'))
-
-    return render_template('edit_user.html', form=form, user=user)
-
-@main.route('/delete_user/<int:user_id>', methods=['POST'])
-def delete_user(user_id):
-    user = User.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
-    flash(f'Usuário {user.username} foi excluído com sucesso.')
-    return redirect(url_for('main.admin'))
+    return render_template('alunos.html', roles=roles)
 
 @main.app_errorhandler(404)
 def page_not_found(e):
