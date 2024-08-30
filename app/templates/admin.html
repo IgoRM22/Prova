@@ -12,6 +12,7 @@
             <tr>
                 <th>Função</th>
                 <th>Usuários</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,17 @@
                     <ul>
                         {% for user in role.users %}
                         <li>{{ user.username }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for user in role.users %}
+                        <li>
+                            <form action="{{ url_for('main.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                            </form>
+                        </li>
                         {% endfor %}
                     </ul>
                 </td>

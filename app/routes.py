@@ -1,5 +1,5 @@
 # app/routes.py
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, flash
 from . import db
 from .models import User, Role
 from .forms import NameForm
@@ -44,6 +44,14 @@ def dashboard():
 def admin():
     roles = Role.query.all()
     return render_template('admin.html', roles=roles)
+
+@main.route('/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    flash(f'Usuário {user.username} foi excluído com sucesso.')
+    return redirect(url_for('main.admin'))
 
 @main.app_errorhandler(404)
 def page_not_found(e):
