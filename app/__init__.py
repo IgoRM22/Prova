@@ -1,24 +1,26 @@
-# app/__init__.py
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 from config import config
 
-# Instancia as extensões
+# Instância de extensões (inicializadas posteriormente)
 db = SQLAlchemy()
+migrate = Migrate()
 bootstrap = Bootstrap()
+moment = Moment()
 
-def create_app(config_name='default'):
-    # Cria a instância da aplicação Flask
+def create_app(config_name):
+    # Cria a aplicação Flask
     app = Flask(__name__)
-
-    # Aplica as configurações
     app.config.from_object(config[config_name])
 
-    # Inicializa as extensões com a aplicação
+    # Inicializa extensões
     db.init_app(app)
+    migrate.init_app(app, db)
     bootstrap.init_app(app)
+    moment.init_app(app)
 
     # Registra o blueprint principal
     from .main import main as main_blueprint

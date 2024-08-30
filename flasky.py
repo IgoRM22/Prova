@@ -1,14 +1,17 @@
-# flasky.py
-
+import os
 from app import create_app, db
-from flask_migrate import Migrate
+from app.models import User, Role
+from flask_migrate import MigrateCommand
+from flask_script import Manager
 
-# Cria a instância da aplicação usando a factory pattern
-app = create_app()
+# Cria a aplicação com base na configuração especificada
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+manager = Manager(app)
 
-# Configura a migração do banco de dados
-migrate = Migrate(app, db)
+# Comando para iniciar o shell com o contexto da aplicação
+@manager.command
+def shell():
+    return dict(app=app, db=db, User=User, Role=Role)
 
 if __name__ == '__main__':
-    # Inicia o servidor Flask
-    app.run(debug=True)
+    manager.run()
