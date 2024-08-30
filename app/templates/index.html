@@ -6,14 +6,14 @@
 
 {% block page_content %}
 <div class="container">
-    <!-- Cabeçalho da Página -->
     <div class="page-header">
-        <h1>Olá, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-        {% if not known %}
-        <p>Prazer em conhecê-lo!</p>
-        {% else %}
-        <p>Feliz em vê-lo novamente!</p>
-        {% endif %}
+        <h3>Avaliação semestral</h3>
+        <p>Aluno: Igor Ramos Almeida</p>
+        <p>Prontuário: PT3019284</p>
+
+    </div>
+    <div>
+        <p>A data e hora local é {{ moment().format('MMMM D, YYYY h:mm A') }}.</p>
     </div>
 </div>
 {% endblock %}
