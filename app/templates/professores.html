@@ -6,27 +6,16 @@
 
 {% block page_content %}
 <div class="container">
-    <!-- Cabeçalho da Página -->
-    <div class="page-header">
-        <h1>Olá, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-        {% if not known %}
-        <p>Prazer em conhecê-lo!</p>
-        {% else %}
-        <p>Feliz em vê-lo novamente!</p>
-        {% endif %}
-    </div>
-
     <!-- Formulário -->
     {{ wtf.quick_form(form) }}
 
     <!-- Relação de Usuários Cadastrados -->
-    <h2>Relação de usuários cadastrados</h2>
-    <h4>Quantidade: {{ user_all|length }}</h4>
+    <h2>Relação de professores cadastrados</h2>
     <table class="table">
         <thead>
             <tr>
-                <th>Nome do usuário</th>
-                <th>Função</th>
+                <th>Professor</th>
+                <th>Disciplina</th>
             </tr>
         </thead>
         <tbody>

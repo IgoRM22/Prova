@@ -4,6 +4,6 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 
 class NameForm(FlaskForm):
-    name = StringField('What is your name?', validators=[DataRequired()])
-    role = SelectField('Role?', choices=[], validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    name = StringField('Cadastre o novo Professor:', validators=[DataRequired()])
+    role = SelectField('Disciplina associada:', choices=[], validators=[DataRequired()])
+    submit = SubmitField('Cadastrar')
