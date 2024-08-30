@@ -1,17 +1,13 @@
-import os
+# flasky.py
+
 from app import create_app, db
 from app.models import User, Role
-from flask_migrate import MigrateCommand
-from flask_script import Manager
 
-# Cria a aplicação com base na configuração especificada
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-manager = Manager(app)
+app = create_app()
 
-# Comando para iniciar o shell com o contexto da aplicação
-@manager.command
-def shell():
-    return dict(app=app, db=db, User=User, Role=Role)
+@app.shell_context_processor
+def make_shell_context():
+    return dict(db=db, User=User, Role=Role)
 
 if __name__ == '__main__':
-    manager.run()
+    app.run(debug=True)

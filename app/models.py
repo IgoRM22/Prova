@@ -1,3 +1,5 @@
+# app/models.py
+
 from . import db
 
 class Role(db.Model):
@@ -8,6 +10,7 @@ class Role(db.Model):
 
     def __repr__(self):
         return f'<Role {self.name}>'
+
 
 class User(db.Model):
     __tablename__ = 'users'
