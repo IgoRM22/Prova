@@ -31,7 +31,7 @@ def professores():
 
         session['name'] = form.name.data
         session['role'] = role.name
-        return redirect(url_for('professores.index'))
+        return redirect(url_for('main.professores'))
 
     users = User.query.all()
     roles = Role.query.all()
