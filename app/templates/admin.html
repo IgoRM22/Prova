@@ -7,12 +7,12 @@
 <div class="container">
     <h1>Administração</h1>
     <p>Abaixo estão listadas todas as funções e os usuários associados a cada uma delas:</p>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Função</th>
                 <th>Usuários</th>
-                <th>Ação</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -29,9 +29,14 @@
                 <td>
                     <ul>
                         {% for user in role.users %}
-                        <li>
+                        <li style="display: flex; align-items: center;">
+                            <!-- Botão Editar -->
+                            <form action="#" method="GET" style="display:inline;">
+                                <button type="button" class="btn btn-info btn-sm" style="margin-right: 5px;">Editar</button>
+                            </form>
+                            <!-- Botão Excluir -->
                             <form action="{{ url_for('main.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                <button type="submit" class="btn btn-danger btn-sm">&times;</button>
                             </form>
                         </li>
                         {% endfor %}
