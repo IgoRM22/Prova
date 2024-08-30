@@ -25,15 +25,19 @@ def professores():
             user = User(username=form.name.data, role=role)
             db.session.add(user)
             db.session.commit()
-            flash('Professor cadastrado com sucesso!')
+            session['known'] = False
         else:
-            flash('Professor já cadastrado.')
+            session['known'] = True
 
-        return redirect(url_for('main.professores'))
+        session['name'] = form.name.data
+        session['role'] = role.name
+        return redirect(url_for('main.index'))
 
     users = User.query.all()
+    roles = Role.query.all()
 
-    return render_template('professores.html', form=form, users=users)
+    return render_template('index.html', form=form, name=session.get('name'),
+                           known=session.get('known', False), user_all=users, roles=roles)
 
 @main.route('/disciplinas')
 def disciplinas():
