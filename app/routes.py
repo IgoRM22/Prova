@@ -7,38 +7,24 @@ from flask import Blueprint
 
 main = Blueprint('main', __name__)
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/')
 def index():
-    form = NameForm()
+    users = User.query.all()
+    return render_template('disciplinas.html', users=users)
 
-    form.role.choices = [(role.id, role.name) for role in Role.query.order_by('name')]
+@main.route('/professores', methods=['GET', 'POST'])
+def professores():
+    form = NameForm()  # Substitua por um formulário específico para professores, se existir
 
     if form.validate_on_submit():
-        role = Role.query.filter_by(id=form.role.data).first()
-        user = User.query.filter_by(username=form.name.data).first()
-
-        if user is None:
-            user = User(username=form.name.data, role=role)
-            db.session.add(user)
-            db.session.commit()
-            session['known'] = False
-        else:
-            session['known'] = True
-
-        session['name'] = form.name.data
-        session['role'] = role.name
-        return redirect(url_for('main.index'))
+        user = User(username=form.name.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Professor cadastrado com sucesso!')
+        return redirect(url_for('main.professores'))
 
     users = User.query.all()
-    roles = Role.query.all()
-
-    return render_template('index.html', form=form, name=session.get('name'),
-                           known=session.get('known', False), user_all=users, roles=roles)
-
-@main.route('/professores')
-def professores():
-    users = User.query.all()
-    return render_template('professores.html', users=users)
+    return render_template('professores.html', form=form, users=users)
 
 @main.route('/disciplinas')
 def disciplinas():
