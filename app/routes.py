@@ -41,13 +41,11 @@ def professores():
 
 @main.route('/disciplinas')
 def disciplinas():
-    users = User.query.all()
-    return render_template('disciplinas.html', users=users)
+    return render_template('disciplinas.html')
 
 @main.route('/alunos')
 def alunos():
-    roles = Role.query.all()
-    return render_template('alunos.html', roles=roles)
+    return render_template('alunos.html')
 
 @main.app_errorhandler(404)
 def page_not_found(e):
