@@ -1,18 +1,14 @@
-import os
+# flasky.py
+
 from app import create_app, db
-from app.models import User, Role
-from flask_migrate import MigrateCommand
-from flask_script import Manager
+from flask_migrate import Migrate
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-manager = Manager(app)
+# Cria a instância da aplicação usando a factory pattern
+app = create_app()
 
-@manager.command
-def test():
-    """Run the unit tests."""
-    import unittest
-    tests = unittest.TestLoader().discover('tests')
-    unittest.TextTestRunner(verbosity=2).run(tests)
+# Configura a migração do banco de dados
+migrate = Migrate(app, db)
 
 if __name__ == '__main__':
-    manager.run()
+    # Inicia o servidor Flask
+    app.run(debug=True)
