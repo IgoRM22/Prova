@@ -36,17 +36,17 @@ def index():
                            known=session.get('known', False), user_all=users, roles=roles)
 
 @main.route('/professores')
-def dashboard():
+def professores():
     users = User.query.all()
     return render_template('professores.html', users=users)
 
 @main.route('/disciplinas')
-def dashboard():
+def ddisciplinas():
     users = User.query.all()
     return render_template('disciplinas.html', users=users)
 
 @main.route('/alunos')
-def admin():
+def alunos():
     roles = Role.query.all()
     return render_template('alunos.html', roles=roles)
 
