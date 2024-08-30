@@ -31,12 +31,12 @@ def professores():
 
         session['name'] = form.name.data
         session['role'] = role.name
-        return redirect(url_for('main.index'))
+        return redirect(url_for('professores.index'))
 
     users = User.query.all()
     roles = Role.query.all()
 
-    return render_template('index.html', form=form, name=session.get('name'),
+    return render_template('professores.html', form=form, name=session.get('name'),
                            known=session.get('known', False), user_all=users, roles=roles)
 
 @main.route('/disciplinas')
