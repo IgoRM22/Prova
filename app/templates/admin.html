@@ -1,0 +1,33 @@
+<!-- app/templates/admin.html -->
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <h1>Administração</h1>
+    <p>Abaixo estão listadas todas as funções e os usuários associados a cada uma delas:</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Função</th>
+                <th>Usuários</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for role in roles %}
+            <tr>
+                <td>{{ role.name }}</td>
+                <td>
+                    <ul>
+                        {% for user in role.users %}
+                        <li>{{ user.username }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

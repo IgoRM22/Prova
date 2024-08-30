@@ -1,19 +1,16 @@
 # app/routes.py
-
 from flask import render_template, session, redirect, url_for
 from . import db
 from .models import User, Role
 from .forms import NameForm
 from flask import Blueprint
 
-# Definição do blueprint principal
 main = Blueprint('main', __name__)
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = NameForm()
 
-    # Preenche as opções do campo de função dinamicamente
     form.role.choices = [(role.id, role.name) for role in Role.query.order_by('name')]
 
     if form.validate_on_submit():
@@ -38,8 +35,16 @@ def index():
     return render_template('index.html', form=form, name=session.get('name'),
                            known=session.get('known', False), user_all=users, roles=roles)
 
+@main.route('/dashboard')
+def dashboard():
+    users = User.query.all()
+    return render_template('dashboard.html', users=users)
 
-# Manipuladores de erros personalizados
+@main.route('/admin')
+def admin():
+    roles = Role.query.all()
+    return render_template('admin.html', roles=roles)
+
 @main.app_errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
