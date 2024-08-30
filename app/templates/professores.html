@@ -1,15 +1,8 @@
-<!-- app/templates/index.html -->
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-
-{% block title %}Flasky{% endblock %}
+{% block title %}Professores{% endblock %}
 
 {% block page_content %}
 <div class="container">
-    <!-- Formulário -->
-    {{ wtf.quick_form(form) }}
-
-    <!-- Relação de Usuários Cadastrados -->
     <h2>Relação de professores cadastrados</h2>
     <table class="table">
         <thead>
@@ -19,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in user_all %}
+            {% for user in users %}
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.role.name }}</td>
